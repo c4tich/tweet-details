@@ -1,5 +1,6 @@
 import re
 import twitter
+import pdb
 
 
 webAccess=False;
@@ -52,9 +53,20 @@ with open('logon.details') as fp:
 		details.append(line)
 
 # rstrip removes the newline character appended with each append operation
-apiDetails=twitter.Api(consumer_key=details[0].rstrip(),
-						consumer_secret=details[1].rstrip(),
-						access_token_key=details[2].rstrip(),
-						access_token_secret=details[3].rstrip())
-print(apiDetails.VerifyCredentials())
+try:
+	apiDetails=twitter.Api(consumer_key=details[0],
+							consumer_secret=details[1],
+							access_token_key=details[2],
+							access_token_secret=details[3])
+	print(apiDetails.VerifyCredentials())
+except twitter.error.TwitterError as err:
+# check if the credentials allowed the app to successfully login
+	print('There was a problem validating your credentials: ' + str(err.message))
+else:
+	print('Your credentials were successfully validated')
+	
+	
+
+
+
 
