@@ -19,6 +19,7 @@ if not webAccess:
 	
 print('The inputted ID is ' + tweetID)
 
+# input validation
 if(tweetID.isnumeric() and len(tweetID)==18):
 	numericID=True
 	validInput=True
@@ -42,3 +43,18 @@ else:
 	else:
 		tweetID=tweetID[len(tweetID)-18:len(tweetID)]
 		print("Your input was successfully parsed as URL. Its numID is: "+ tweetID)
+
+# validation
+# details is a list with the 4 keys required for the twitter API: consumer, consumer secret, access token and access token secret. They must be in a file called logon.details one per line
+details=[]
+with open('logon.details') as fp:
+	for line in fp:
+		details.append(line)
+
+# rstrip removes the newline character appended with each append operation
+apiDetails=twitter.Api(consumer_key=details[0].rstrip(),
+						consumer_secret=details[1].rstrip(),
+						access_token_key=details[2].rstrip(),
+						access_token_secret=details[3].rstrip())
+print(apiDetails.VerifyCredentials())
+
