@@ -15,8 +15,8 @@ if not webAccess:
 
 	print('\nPlease input the tweet ID or URL: ')
 	#tweetID=input()
-	# tweetID='https://www.twitter.com/MeninistTweet/status/123456789012345678'
-	tweetID='123456789012345678'
+	tweetID='https://twitter.com/agarzon/status/894307341952311296'
+	# tweetID='123456789012345678'
 	
 print('The inputted ID is ' + tweetID)
 
@@ -54,19 +54,19 @@ with open('logon.details') as fp:
 
 # rstrip removes the newline character appended with each append operation
 try:
-	apiDetails=twitter.Api(consumer_key=details[0],
-							consumer_secret=details[1],
-							access_token_key=details[2],
-							access_token_secret=details[3])
-	print(apiDetails.VerifyCredentials())
+	apiDetails=twitter.Api(consumer_key=details[0].rstrip(),
+							consumer_secret=details[1].rstrip(),
+							access_token_key=details[2].rstrip(),
+							access_token_secret=details[3].rstrip())
+	#print(apiDetails.VerifyCredentials())
 except twitter.error.TwitterError as err:
 # check if the credentials allowed the app to successfully login
 	print('There was a problem validating your credentials: ' + str(err.message))
 else:
 	print('Your credentials were successfully validated')
 	
-	
-
-
-
-
+# validation of provided ID 
+try:
+	tweet=apiDetails.GetStatus(status_id=int(tweetID))
+except Exception as exc:
+	print('There was a problem with the provided identifier: ' + str(exc.message))
