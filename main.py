@@ -1,6 +1,6 @@
 import re
 import twitter
-import pdb
+from datetime import datetime
 
 
 webAccess=False;
@@ -65,8 +65,17 @@ except twitter.error.TwitterError as err:
 else:
 	print('Your credentials were successfully validated')
 	
-# validation of provided ID 
+# validation of provided ID and get of tweet object
 try:
 	tweet=apiDetails.GetStatus(status_id=int(tweetID))
+	print('\n\n')
+	print('Content details:')
+	print('\tContent of the tweet: ')
+	print('\t\t<<'+str(tweet.text)+'>>')
+	print('\tAuthor:')
+	print('\t\t@'+tweet.in_reply_to_screen_name+', '+tweet.user.name+' (cuenta verificada)' if tweet.user.verified else '')
+	d=datetime.strptime(tweet.created_at,'%a %b %d %H:%M:%S %z %Y')
+	print('Publication details:')
+	print('\tDate of publication: ' + str(d.day)+'/'+str(d.month)+'/'+str(d.year))
 except Exception as exc:
 	print('There was a problem with the provided identifier: ' + str(exc.message))
