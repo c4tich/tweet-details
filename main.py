@@ -1,6 +1,8 @@
 import re
 # pip install python-twitter
 import twitter
+# pip install emoji --upgrade
+import emoji
 from datetime import datetime
 
 
@@ -75,6 +77,7 @@ else:
 # validation of provided ID and get of tweet object
 #try:
 tweet=apiDetails.GetStatus(status_id=int(tweetID))
+print(tweet)
 print('\n\n')
 print('Content details:')
 print('\tContent of the tweet: ')
